@@ -7,3 +7,5 @@ ai_board = [
     ["","",""]
 ]
 
+def get_best_move(board):
+    pass
