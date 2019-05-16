@@ -5,6 +5,7 @@ import random
 import glob
 from time import sleep
 import re
+import asyncio
 
 
 class BlackJackWindow:
@@ -59,6 +60,67 @@ class BlackJackWindow:
 
         # print(str(len(self.card_list)))
 
+    async def update_label_text(self):
+        try:
+            while True:
+                self.house_total_text.set(str(self.house_total))
+                self.player_total_text.set(str(self.player_total))
+
+                self.root.update()
+        except tk.TclError:
+            print("TclError")
+
+    def victory(self, who_wins, blackjack):
+        if who_wins == 'Player' and blackjack == True:
+            self.status_text.set("BLACKJACK!!!\nPlayer WINS!")
+            self.player_wins_total += 1
+            self.player_bj_total += 1
+
+            self.deal_button.pack()
+            self.deal_button['state'] = 'normal'
+            self.stand_button.pack_forget()
+            self.hit_button.pack_forget()
+
+
+
+        elif who_wins == 'Player' and blackjack == False:
+            self.status_text.set("Player WINS!")
+            self.player_wins_total += 1
+
+            self.deal_button.pack()
+            self.deal_button['state'] = 'normal'
+            self.stand_button.pack_forget()
+            self.hit_button.pack_forget()
+
+        elif who_wins == 'House' and blackjack ==True:
+            self.status_text.set("BLACKJACK!!!\nPlayer LOSES!")
+            self.house_wins_total += 1
+            self.house_bj_total += 1
+
+
+            self.deal_button.pack()
+            self.deal_button['state'] = 'normal'
+            self.stand_button.pack_forget()
+            self.hit_button.pack_forget()
+
+        elif who_wins == 'House' and blackjack == False:
+            self.status_text.set("Player LOSES!")
+            self.house_wins_total += 1
+
+            self.deal_button.pack()
+            self.deal_button['state'] = 'normal'
+            self.stand_button.pack_forget()
+            self.hit_button.pack_forget()
+
+        elif who_wins == 'Draw':
+            self.status_text.set("It's a DRAW!")
+            self.total_draws += 1
+
+            self.deal_button.pack()
+            self.deal_button['state'] = 'normal'
+            self.stand_button.pack_forget()
+            self.hit_button.pack_forget()
+
     def check_card_value(self, who):
 
         if who == "Player":
@@ -91,6 +153,8 @@ class BlackJackWindow:
         elif who == 'House':
             self.house_aces = aces
 
+
+
         return total_score
 
     def deal_a_card(self, to_who):
@@ -107,32 +171,34 @@ class BlackJackWindow:
             self.root.update()
             self.player_labels.append(self.player_card)
 
+
+
     def deal(self):
         """
         Deals 2 cards to House and Player. First (House's) card is not revealed
         Button will vanish after pressing and reappear when round is over
         :return: None
         """
-        # self.deal_button.pack_forget()
+        self.deal_button.pack_forget()
         self.hit_button['state'] = 'normal'
         self.stand_button['state'] = 'normal'
         self.hit_button.pack(side='left', anchor='center', padx=50)
         self.stand_button.pack(side='right', anchor='center', padx=50)
         self.house_aces = 0
         self.player_aces = 0
-        self.used_player_aces = 0
-        self.used_house_aces = 0
         self.player_total = 0
         self.house_total = 0
         self.house_total_text.set(str(self.house_total))
         self.player_total_text.set(str(self.player_total))
+        self.status_text.set("Dealing")
+
+
 
         for label in self.house_labels:
-            # print(label["image"])
-            label.config(image="")
+            label.destroy()
 
         for label in self.player_labels:
-            label.config(image="")
+            label.destroy()
 
         self.house_labels = []
         self.player_labels = []
@@ -145,6 +211,7 @@ class BlackJackWindow:
                 self.house_card.pack(side='left')
                 self.root.update()
                 self.house_labels.append(self.house_card)
+                self.back_card = True
                 sleep(0.5)
             else:
                 self.deal_a_card('House')
@@ -155,9 +222,14 @@ class BlackJackWindow:
 
         self.player_total = self.check_card_value('Player')
         self.house_total = self.check_card_value('House')
-        self.house_total_text.set(str(self.house_total))
-        self.player_total_text.set(str(self.player_total))
+        #self.house_total_text.set(str(self.house_total))
+        #self.player_total_text.set(str(self.player_total))
         print(self.player_total)
+
+        if self.player_total == 21:
+            self.victory('Player', True)
+
+        self.status_text.set("Let's play!")
 
     def hit(self, house_or_player):
         """
@@ -177,28 +249,90 @@ class BlackJackWindow:
                         print("Players ACE's: ", self.player_aces)
                         self.player_total -= 10
                         self.player_aces -= 1
-                        self.used_player_aces += 1
                 if self.player_total > 21:
                     print("YOU LOST")
-                    self.hit_button['state'] = 'disabled'
-                    self.stand_button['state'] = 'disabled'
-                    print("Player Total is          ", self.player_total)
+
+                    self.victory('House', False)
+
             if self.player_total == 21:
                 self.hit_button['state'] = 'disabled'
+                self.player_total_text.set(str(self.player_total))
+                self.root.update()
+                sleep(1)
                 self.hit("House")
 
-        self.house_total_text.set(str(self.house_total))
-        self.player_total_text.set(str(self.player_total))
+
 
         if house_or_player == 'House':
             self.hit_button['state'] = 'disabled'
             self.stand_button['state'] = 'disabled'
 
             """Remove the back side card"""
-            for label in self.house_labels:
-                # print(label["image"])
-                label.config(image="")
-                break
+            if self.back_card == True:
+
+                self.house_labels[0].config(image=random.choice(self.card_list))
+
+                self.back_card = False
+                self.house_total = self.check_card_value("House")
+
+
+
+
+            while self.house_total < 18:
+                sleep(1.5)
+                self.deal_a_card("House")
+                self.house_total = self.check_card_value("House")
+                self.house_total_text.set(str(self.house_total))
+                self.root.update()
+
+                if self.house_total > 21:
+
+
+                    while self.house_total > 21 and self.house_aces > 0:
+                            self.house_total -= 10
+                            self.house_aces -= 1
+
+
+                    if self.house_total > 21:
+                        print("Player wins")
+                        self.victory('Player', False)
+                        break
+
+
+
+
+
+
+
+
+            if self.house_total > 21:
+                print("House Loses")
+                self.victory('Player', False)
+
+
+            elif self.house_total == 21 and self.player_total < 21:
+                print("Player Loses")
+                self.victory('House', False)
+
+            elif self.house_total == self.player_total:
+                print("Draw")
+                self.victory('Draw', False)
+                self.status_text.set("It's a draw")
+
+            elif self.house_total >= 18 and self.player_total < self.house_total:
+                print("Player Loses")
+                self.victory('House', False)
+
+                self.deal_button['state'] = 'normal'
+
+            elif self.house_total >= 18 and self.player_total > self.house_total:
+                print("Player Wins")
+                self.victory('Player', False)
+
+
+        self.house_total_text.set(str(self.house_total))
+        self.player_total_text.set(str(self.player_total))
+
 
     def create_widgets(self):
         self.window_frame = tk.Frame(self.root)
@@ -213,42 +347,63 @@ class BlackJackWindow:
         house_label.grid(row=0, column=0)
 
         self.player_frame = tk.Frame(self.window_frame, height=(500 // 4), width=(726 // 4))
-        self.player_frame.grid(row=1, column=1, pady=30, padx=50)
+        self.player_frame.grid(row=2, column=1, pady=30, padx=50)
         for x in range(2):
             self.deal_a_card('Player')
 
         player_label = tk.Label(self.window_frame, textvariable=self.player_total_text, font='Times 25')
-        player_label.grid(row=1, column=0)
+        player_label.grid(row=2, column=0)
+
+        self.status_frame = tk.Frame(self.window_frame)
+        self.status_frame.grid(row=1, column=1)
+
+        status_label = tk.Label(self.status_frame, textvariable=self.status_text, font='Times 25')
+        status_label.pack(anchor='center', )
 
         self.button_frame = tk.Frame(self.root)
         self.button_frame.pack_forget()
 
-        self.deal_button = tk.Button(self.button_frame, text='Deal', command=lambda: self.deal())
+        self.deal_button = tk.Button(self.button_frame, text='Deal', command=lambda: self.deal(), font='Times 20')
         self.deal_button.pack()
 
-        self.stand_button = tk.Button(self.button_frame, text='Stand', command=lambda: self.hit('House'))
+        self.stand_button = tk.Button(self.button_frame, text='Stand', command=lambda: self.hit('House'), font='Times 20')
         self.stand_button.pack_forget()
 
-        self.hit_button = tk.Button(self.button_frame, text='Hit', command=lambda: self.hit('Player'))
+        self.hit_button = tk.Button(self.button_frame, text='Hit', command=lambda: self.hit('Player'), font='Times 20')
         self.hit_button.pack_forget()
 
     def __init__(self):
         self.root = tk.Tk()
+
+        #print(self.root.winfo_class())
+
+
+
         self.root.title('BlackJack')
         self.root.geometry('+450+350')
+
 
         self.packs = 1
         self.player_total = 0
         self.player_aces = 0
-        self.used_player_aces = 0
         self.house_total = 0
         self.house_aces = 0
-        self.used_house_aces = 0
+
+        self.player_wins_total = 0
+        self.house_wins_total = 0
+        self.total_draws = 0
+        self.player_bj_total = 0
+        self.house_bj_total = 0
+
+        self.back_card = True
 
         self.house_total_text = StringVar()
         self.player_total_text = StringVar()
         self.house_total_text.set(str(self.house_total))
         self.player_total_text.set(str(self.player_total))
+
+        self.status_text = StringVar()
+        self.status_text.set("")
 
         self.card_list = []
         self.filenames = []
@@ -271,8 +426,15 @@ class BlackJackWindow:
 
         self.load()
 
+        try:
+            asyncio.run(self.update_label_text())
+        except ValueError:
+            print("Async Error")
         self.root.mainloop()
 
 
 if __name__ == '__main__':
+
+
+
     BlackJackWindow()
