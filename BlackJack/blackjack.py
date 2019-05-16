@@ -67,6 +67,7 @@ class BlackJackWindow:
         elif who == "House":
             labels = self.house_labels
 
+        aces = 0
         total_score = 0
         for text in labels:
             temp = text["image"].split("pyimage")
@@ -74,12 +75,10 @@ class BlackJackWindow:
             temp = re.findall(r'\d+', name)
             score = int(temp[0])
 
-            if score == 14 and who == 'Player':
+
+            if score == 14:
                 score = 11
-                self.player_aces += 1
-            elif score == 14 and who == 'House':
-                score = 11
-                self.house_aces += 1
+                aces += 1
 
             elif score > 10:
                 score = 10
@@ -87,10 +86,12 @@ class BlackJackWindow:
             print("Card value is ", score)
 
             total_score += score
+        if who == 'Player':
+            self.player_aces = aces
+        elif who == 'House':
+            self.house_aces = aces
 
         return total_score
-
-
 
     def deal_a_card(self, to_who):
         if to_who == 'House':
@@ -117,7 +118,14 @@ class BlackJackWindow:
         self.stand_button['state'] = 'normal'
         self.hit_button.pack(side='left', anchor='center', padx=50)
         self.stand_button.pack(side='right', anchor='center', padx=50)
+        self.house_aces = 0
+        self.player_aces = 0
+        self.used_player_aces = 0
+        self.used_house_aces = 0
         self.player_total = 0
+        self.house_total = 0
+        self.house_total_text.set(str(self.house_total))
+        self.player_total_text.set(str(self.player_total))
 
         for label in self.house_labels:
             # print(label["image"])
@@ -165,15 +173,17 @@ class BlackJackWindow:
             print(self.player_total)
 
             if self.player_total > 21:
-                if self.player_aces > 0:
-                    self.player_total -= 10
-                    self.player_aces -= 1
-                else:
+                while self.player_total > 21 and self.player_aces > 0:
+                        print("Players ACE's: ", self.player_aces)
+                        self.player_total -= 10
+                        self.player_aces -= 1
+                        self.used_player_aces += 1
+                if self.player_total > 21:
                     print("YOU LOST")
                     self.hit_button['state'] = 'disabled'
                     self.stand_button['state'] = 'disabled'
                     print("Player Total is          ", self.player_total)
-            elif self.player_total == 21:
+            if self.player_total == 21:
                 self.hit_button['state'] = 'disabled'
                 self.hit("House")
 
@@ -181,7 +191,14 @@ class BlackJackWindow:
         self.player_total_text.set(str(self.player_total))
 
         if house_or_player == 'House':
-            pass
+            self.hit_button['state'] = 'disabled'
+            self.stand_button['state'] = 'disabled'
+
+            """Remove the back side card"""
+            for label in self.house_labels:
+                # print(label["image"])
+                label.config(image="")
+                break
 
     def create_widgets(self):
         self.window_frame = tk.Frame(self.root)
@@ -192,9 +209,8 @@ class BlackJackWindow:
         for x in range(2):
             self.deal_a_card('House')
 
-
         house_label = tk.Label(self.window_frame, textvariable=self.house_total_text, font='Times 25')
-        house_label.grid(row=0, column=0, padx=10)
+        house_label.grid(row=0, column=0)
 
         self.player_frame = tk.Frame(self.window_frame, height=(500 // 4), width=(726 // 4))
         self.player_frame.grid(row=1, column=1, pady=30, padx=50)
@@ -202,7 +218,7 @@ class BlackJackWindow:
             self.deal_a_card('Player')
 
         player_label = tk.Label(self.window_frame, textvariable=self.player_total_text, font='Times 25')
-        player_label.grid(row=1, column=0, padx=10)
+        player_label.grid(row=1, column=0)
 
         self.button_frame = tk.Frame(self.root)
         self.button_frame.pack_forget()
@@ -224,14 +240,15 @@ class BlackJackWindow:
         self.packs = 1
         self.player_total = 0
         self.player_aces = 0
+        self.used_player_aces = 0
         self.house_total = 0
         self.house_aces = 0
+        self.used_house_aces = 0
 
         self.house_total_text = StringVar()
         self.player_total_text = StringVar()
         self.house_total_text.set(str(self.house_total))
         self.player_total_text.set(str(self.player_total))
-
 
         self.card_list = []
         self.filenames = []
