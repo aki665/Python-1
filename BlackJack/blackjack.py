@@ -5,9 +5,6 @@ import random
 import glob
 from time import sleep
 import re
-import asyncio
-import threading
-import concurrent.futures
 
 
 class BlackJackWindow:
@@ -306,7 +303,6 @@ class BlackJackWindow:
                 self.house_total = self.check_card_value("House")
                 self.house_total_text.set(str(self.house_total))
                 self.root.update()
-
 
             if self.house_total == 21:
                 self.victory('House', True)

@@ -16,28 +16,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/blackjack.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="309" lean-forward="true" selection-start-line="309" selection-end-line="309" />
+            <state relative-caret-position="136">
+              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#273#1532#0" />
                 <element signature="e#1570#2519#0" />
                 <element signature="e#2898#4617#0" />
                 <element signature="e#4662#5459#0" />
+                <element signature="e#5507#6298#0" />
                 <element signature="e#6020#6704#0" />
                 <element signature="e#6942#8967#0" />
+                <element signature="e#8960#12848#0" />
                 <element signature="e#12301#14570#0" />
                 <element signature="e#15128#18416#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -206,7 +199,13 @@
       <option name="presentableId" value="LOCAL−00002" />
       <updated>1558007620672</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL−00003" summary="Update">
+      <created>1558030796600</created>
+      <option name="number" value="LOCAL−00003" />
+      <option name="presentableId" value="LOCAL−00003" />
+      <updated>1558030796600</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -278,28 +277,30 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/png_button/1_blue.png" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/blackjack.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="309" lean-forward="true" selection-start-line="309" selection-end-line="309" />
+        <state relative-caret-position="136">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#273#1532#0" />
             <element signature="e#1570#2519#0" />
             <element signature="e#2898#4617#0" />
             <element signature="e#4662#5459#0" />
+            <element signature="e#5507#6298#0" />
             <element signature="e#6020#6704#0" />
             <element signature="e#6942#8967#0" />
+            <element signature="e#8960#12848#0" />
             <element signature="e#12301#14570#0" />
             <element signature="e#15128#18416#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
         </state>
       </provider>
     </entry>
