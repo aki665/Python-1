@@ -1,10 +1,16 @@
 import tkinter as tk
 from tkinter import StringVar, messagebox
+import TicTacToeAI
+import time
 
 
 class TicTacToe:
 
+
+
     def victory(self, player_number):
+        self.board = [' '] * 10
+
         self.button1.configure(state='disabled')
         self.button2.configure(state='disabled')
         self.button3.configure(state='disabled')
@@ -32,7 +38,90 @@ class TicTacToe:
             self.turn_label.pack_forget()
             self.main_frame.pack(expand=1)
 
+    def insert_to_board(self, board_place, x_or_o):
+        if x_or_o == 'X':
+            if board_place == 1:
+                self.board[board_place-1] = 'X'
+            elif board_place == 2:
+                self.board[board_place-1] = 'X'
+            elif board_place == 3:
+                self.board[board_place-1] = 'X'
+            elif board_place == 4:
+                self.board[board_place-1] = 'X'
+            elif board_place == 5:
+                self.board[board_place-1] = 'X'
+            elif board_place == 6:
+                self.board[board_place-1] = 'X'
+            elif board_place == 7:
+                self.board[board_place-1] = 'X'
+            elif board_place == 8:
+                self.board[board_place-1] = 'X'
+            elif board_place == 9:
+                self.board[board_place-1] = 'X'
+
+
+        elif x_or_o == 'O':
+
+            if board_place == 1:
+                self.board[board_place - 1] = 'O'
+            elif board_place == 2:
+                self.board[board_place - 1] = 'O'
+            elif board_place == 3:
+                self.board[board_place - 1] = 'O'
+            elif board_place == 4:
+                self.board[board_place-1] = 'O'
+            elif board_place == 5:
+                self.board[board_place-1] = 'O'
+            elif board_place == 6:
+                self.board[board_place-1] = 'O'
+            elif board_place == 7:
+                self.board[board_place-1] = 'O'
+            elif board_place == 8:
+                self.board[board_place-1] = 'O'
+            elif board_place == 9:
+                self.board[board_place-1] = 'O'
+
+        #print(self.board)
+    def activate_button(self, button_num):
+        self.p1_turn = None
+
+        if button_num - 1 == 0:
+            print("AI presses Button1")
+            self.button1.invoke()
+        elif button_num - 1 == 1:
+            print("AI presses Button2")
+            self.button2.invoke()
+        elif button_num - 1 == 2:
+            print("AI presses Button3")
+            self.button3.invoke()
+        elif button_num - 1 == 3:
+            print("AI presses Button4")
+            self.button4.invoke()
+        elif button_num - 1 == 4:
+            print("AI presses Button5")
+            self.button5.invoke()
+        elif button_num - 1 == 5:
+            print("AI presses Button6")
+            self.button6.invoke()
+        elif button_num - 1 == 6:
+            print("AI presses Button7")
+            self.button7.invoke()
+        elif button_num - 1 == 7:
+            print("AI presses Button8")
+            self.button8.invoke()
+        elif button_num - 1 == 8:
+            print("AI presses Button9")
+            self.button9.invoke()
+
+
     def on_click(self, button):
+        temp = str(button)
+        if temp[-1] is 'n':
+            board_place = 1
+        else:
+            board_place = int(temp[-1])
+
+
 
         if self.p1_turn:
             turn_text = ("Its %s's turn!" % self.player2)
@@ -40,15 +129,45 @@ class TicTacToe:
             button.configure(text='X')
             self.p1_turn = False
             button.configure(state='disabled')
+            self.insert_to_board(board_place, 'X')
+            self.root.update()
+            self.check_win()
 
-        else:
+
+        elif not self.p1_turn and self.player2 != "AI":
             turn_text = ("Its %s's turn!" % self.player1)
             self.turn_text.set(turn_text)
             button.configure(text='O')
             self.p1_turn = True
             button.configure(state='disabled')
+            self.insert_to_board(board_place, 'O')
+            self.root.update()
+            self.check_win()
 
-        self.check_win()
+        elif self.p1_turn is None:
+            button.configure(text='O')
+            turn_text = ("Its %s's turn!" % self.player1)
+            self.turn_text.set(turn_text)
+            self.p1_turn = True
+            button.configure(state='disabled')
+            self.insert_to_board(board_place, 'O')
+            print(self.board)
+            self.root.update()
+            self.check_win()
+
+        if self.player2 == 'AI' and not self.p1_turn:
+            print("This goes in ", self.board)
+            move = TicTacToeAI.getComputerMove(self.board)
+            print("what was returned "+str(move))
+            
+            time.sleep(1)
+
+            self.activate_button(move)
+            self.root.update()
+
+
+        
+
 
     def check_win(self):
         if (self.button1['text'] == 'X' and self.button2['text'] == 'X' and self.button3['text'] == 'X' or
@@ -109,6 +228,9 @@ class TicTacToe:
 
         self.player1 = self.player1_entry.get()
         self.player2 = self.player2_entry.get()
+        if str.lower(self.player2_entry.get()) == 'ai':
+            print("Play against AI")
+            self.player2 = 'AI'
 
         if len(self.player1) < 1:
             self.player1 = "Player 1"
@@ -204,6 +326,9 @@ class TicTacToe:
         self.p1_turn = True
         self.XO_list = []
 
+        self.board = [' '] * 9
+
+        print(self.board)
         self.create_widgets()
         self.root.mainloop()
 

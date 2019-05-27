@@ -259,7 +259,7 @@ class BlackJackWindow:
     def hit(self, house_or_player):
         """
         Deals player 1 card from card_list and checks if player has less than 21 after dealing
-        If house_or_player == house, then will deal cards to house. House has to hit 17 or lover and stand if 18 or more
+        If house_or_player == house, then will deal cards to house. House has to hit 16 or lover and stand if 17 or more
         """
         # print('Deal to %s' % house_or_player)
         self.hit_button['state'] = 'disabled'

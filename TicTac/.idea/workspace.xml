@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="055eb7ef-efa3-40df-9e6e-0ea08faf8013" name="Default Changelist" comment="" />
+    <list default="true" id="055eb7ef-efa3-40df-9e6e-0ea08faf8013" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../BlackJack/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BlackJack/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BlackJack/blackjack.py" beforeDir="false" afterPath="$PROJECT_DIR$/../BlackJack/blackjack.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TicTacToe.py" beforeDir="false" afterPath="$PROJECT_DIR$/TicTacToe.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TicTacToeAI.py" beforeDir="false" afterPath="$PROJECT_DIR$/TicTacToeAI.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -10,11 +16,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../BlackJack/blackjack.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TicTacToe.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="9" lean-forward="true" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+            <state relative-caret-position="391">
+              <caret line="162" column="24" selection-start-line="162" selection-start-column="24" selection-end-line="162" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
+                <element signature="e#162#1175#0" />
+                <element signature="e#1237#2809#0" />
+                <element signature="e#2861#3851#0" />
+                <element signature="e#5442#7786#0" />
+                <element signature="e#7822#9193#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TicTacToeAI.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="246">
+              <caret line="72" column="26" selection-start-line="72" selection-start-column="26" selection-end-line="72" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -36,6 +59,9 @@
       <find>X</find>
       <find>teOt</find>
       <find>disabled</find>
+      <find>print(self.board</find>
+      <find>num</find>
+      <find>Button</find>
     </findStrings>
     <replaceStrings>
       <replace>self.player2_entry</replace>
@@ -43,6 +69,8 @@
       <replace>O</replace>
       <replace>text</replace>
       <replace>normal</replace>
+      <replace>button_num - 1</replace>
+      <replace>AI presses Button</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -55,8 +83,8 @@
       <list>
         <option value="$APPLICATION_CONFIG_DIR$/scratches/TicTac_scratch.py" />
         <option value="$PROJECT_DIR$/TicTac.py" />
-        <option value="$PROJECT_DIR$/TicTacToe.py" />
         <option value="$PROJECT_DIR$/venv/TicTacToeAI.py" />
+        <option value="$PROJECT_DIR$/TicTacToe.py" />
         <option value="$PROJECT_DIR$/TicTacToeAI.py" />
       </list>
     </option>
@@ -73,7 +101,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -94,6 +121,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -115,7 +143,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.blackjack">
+  <component name="RunManager" selected="Python.TicTac">
     <configuration name="TicTac" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="TicTac" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -181,8 +209,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.blackjack" />
         <item itemvalue="Python.TicTac" />
+        <item itemvalue="Python.blackjack" />
         <item itemvalue="Python.TicTac_scratch" />
       </list>
     </recent_temporary>
@@ -208,8 +236,8 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49947312" weight="0.13217768" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49947312" weight="0.37486458" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.20693392" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -228,30 +256,32 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/TicTacToeAI.py" />
+    <entry file="file://$PROJECT_DIR$/../BlackJack/blackjack.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TicTacToe.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1207">
-          <caret line="72" column="23" selection-start-line="72" selection-start-column="23" selection-end-line="72" selection-end-column="23" />
+        <state relative-caret-position="391">
+          <caret line="162" column="24" selection-start-line="162" selection-start-column="24" selection-end-line="162" selection-end-column="24" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
+            <element signature="e#162#1175#0" />
+            <element signature="e#1237#2809#0" />
+            <element signature="e#2861#3851#0" />
+            <element signature="e#5442#7786#0" />
+            <element signature="e#7822#9193#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TicTacToeAI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="8" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../BlackJack/blackjack.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="9" lean-forward="true" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+        <state relative-caret-position="246">
+          <caret line="72" column="26" selection-start-line="72" selection-start-column="26" selection-end-line="72" selection-end-column="26" />
         </state>
       </provider>
     </entry>
