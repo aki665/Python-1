@@ -3,21 +3,25 @@ import tkinter as tk
 import threading
 
 
+
 class MorseConverter:
+
     def convert(self):
         self.converting = True
         self.morse_text.config(state="normal")
-        normal_text = str.upper(self.normal_text.get("1.0", "end"))
+        normal_text = self.normal_text.get("1.0", "end")
 
         text = ""
         for i in normal_text[:-1]:
+            i = i.upper()
             if i in morse:
                 temp = str.translate(i, self.transTAB)
-                if i == "\n":
-                    temp = "\n"
                 text += temp
             else:
-                pass
+                print(len(self.normal_text.get("1.0", "end")))
+                self.normal_text.delete("1.0", "end")
+                self.normal_text.insert("1.0", normal_text[:-2])
+                print(len(self.normal_text.get("1.0", "end")))
 
 
         self.morse_text.delete("1.0", 'end')
