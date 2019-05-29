@@ -3,7 +3,6 @@ import tkinter as tk
 import threading
 
 
-
 class MorseConverter:
 
     def convert(self):
@@ -23,7 +22,6 @@ class MorseConverter:
                 self.normal_text.insert("1.0", normal_text[:-2])
                 print(len(self.normal_text.get("1.0", "end")))
 
-
         self.morse_text.delete("1.0", 'end')
         self.morse_text.insert("1.0", text)
 
@@ -34,7 +32,7 @@ class MorseConverter:
         main_frame = tk.Frame(self.root, bg='#cec1ff')
         main_frame.pack()
 
-        head_label = tk.Label(main_frame, font='Times 30', text="Welcome to Morse code converter!", bg='#cec1ff')
+        head_label = tk.Label(main_frame, font='Times 30', text="Welcome to 'text to morse code' translator!", bg='#cec1ff')
         head_label.grid(row=0, column=0, columnspan=2)
 
         normal_label = tk.Label(main_frame, font='Times 20', text="Enter normal\ntext here:", bg='#cec1ff')
