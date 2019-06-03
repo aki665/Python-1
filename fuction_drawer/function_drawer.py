@@ -3,46 +3,87 @@ from tkinter import StringVar, ttk
 import math
 import random
 import matplotlib.pyplot as plt
-# plt.use("TkAgg")
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg  # NavigationToolbar2TkAgg
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg #NavigationToolbar2TkAgg
 from matplotlib.figure import Figure
-import time
+import numpy
 
 
 class Graph:
-    @staticmethod
-    def add_line(function_list, f):
-        for functions in function_list:
-            print(functions.calculate())
-            temp2 = functions.calculate()
-            g = f.add_subplot()
-            g.plot(temp2)
-            # help(g.plot)
-        return function_list
+    def update_line(self, function, ax, functions_id):
+        line = ax.lines[functions_id]
+        print("UPDATING LINE: ", line)
+        temp = function.calculate()
+        line.set_data(temp[0], temp[1])
+        self.canvas.draw()
 
-    @staticmethod
-    def delete_line():
-        pass
+    def add_line(self, function, ax, functions_id):
+        print("add_line FunctionBarOBJ and ID", function, functions_id)
+        self.functions_list.append(function)
+        temp = function.calculate()
+        print("Result from calculation: ", temp[1])
+
+        ax.plot(temp[0], temp[1])
+
+        temp2 = ax.lines[functions_id]
+        print("LINE and ID: ", temp2, functions_id)
+        function.get_line(temp2)
+        print("AX.LINES:", ax.lines)
+        #help(ax.lines[0])
+        #help(ax.plot)
+
+    def delete_line(self, line, id):
+        print(line, id)
+        line.remove()
+        self.functions_list.pop(id)
+        temp = 0
+        for i in self.functions_list:
+            i.id = temp
+            print(i.id)
+            temp += 1
+
 
     def __init__(self, f, root):
-        canvas = FigureCanvasTkAgg(f, root)
-        canvas.get_tk_widget().pack(side='bottom', fill='both', expand=True)
+        self.canvas = FigureCanvasTkAgg(f, root)
+        self.canvas.get_tk_widget().pack(side='bottom', fill='both', expand=True)
+        self.functions_list = []
 
 
-class FunctionBar():
+class FunctionBar:
+    def get_line(self, line):
+        self.line = line
+
+
+    def update_line(self):
+        #self.window.functions_amount -= 1
+        #Graph.delete_line(self.line)
+        self.window.update_line(self, self.window.ax, self.id)
+
     def calculate(self):
-        # x = []
+        #print("A, B, C and D: ", self.a, self.b, self.c, self.d)
+        x = []
         y = []
-        print("inside calculate ", self.degree.get())
+        #print("inside calculate ", self.degree.get())
         if self.degree.get() == "First degree":  # 2x - 1     a=2, b=1
-            for i in range(10):
-                # x.append(i)
+            for i in range(- self.window.x_lim, self.window.x_lim + 1):
+                x.append(i)
                 j = self.a * i - self.b
                 y.append(j)
 
-        return y
+        if self.degree.get() == "Second degree": #2x^2 - 5x - 5
+            for i in numpy.arange(- self.window.x_lim, self.window.x_lim + 1, 0.1):
+                x.append(i)
+                j = self.a * i * i - self.b * i - self.c
+                y.append(j)
+        if self.degree.get() == "Third degree": #2x^3 - 5x^2 -4x - 5
+            for i in numpy.arange(- self.window.x_lim, self.window.x_lim + 1, 0.1):
+                x.append(i)
+                j = self.a * i * i * i - self.b * i * i - self.c * i - self.d
+                y.append(j)
 
-    def drop_down(self, degree):
+        temp = [x, y]
+        return temp
+
+    def drop_down(self, degree, firsttime = False):
         frame = self.function
         if degree == "First degree":
             self.first_degree(frame)
@@ -50,6 +91,9 @@ class FunctionBar():
             self.second_degree(frame)
         elif degree == "Third degree":
             self.third_degree(frame)
+
+        if firsttime is False:
+            self.update_line()
 
     def first_degree(self, frame):
         for widget in frame.winfo_children():
@@ -64,7 +108,7 @@ class FunctionBar():
         x1_label = tk.Label(frame, text="x - ", font="Times 10")
         x1_label.grid(column=2, row=0)
 
-        entry2 = tk.Entry(frame, width=3, text=self.c_text)
+        entry2 = tk.Entry(frame, width=3, text=self.b_text)
         entry2.grid(column=5, row=0)
 
     def second_degree(self, frame):
@@ -119,9 +163,13 @@ class FunctionBar():
 
     def delete(self):
         self.functions.destroy()
-        Graph.delete_line()
+        self.window.delete_line(self.line, self.id)
+        self.window.functions_id -= 1
 
-    def __init__(self, frame, root):
+    def __init__(self, GraphWindow, frame, root, id):
+        self.window = GraphWindow
+        print("ID in __init__: ", id)
+        self.id = id
         self.a = random.randint(-5, 5)
         self.b = random.randint(1, 10)
         self.c = random.randint(1, 10)
@@ -144,20 +192,19 @@ class FunctionBar():
         options_list = ["First degree", "Second degree", "Third degree"]
         options = ttk.OptionMenu(self.functions, self.degree, options_list[0], *options_list, command=self.drop_down)
         options.pack(side='right', padx=50)
-        self.drop_down("First degree")
+        self.drop_down(options_list[0], firsttime=True)
 
         delete_button = ttk.Button(self.functions, text='-', command=lambda: self.delete())
         delete_button.pack(side='right')
 
 
-class GraphWindow:
-    def new_function(self):
-        self.functions += 1
-        temp = FunctionBar(self.functions_frame, self.root)
-        self.function_list.append(temp)
+class GraphWindow(Graph, FunctionBar):
 
-        self.function_list = Graph.add_line(self.function_list, self.f)
-        print(self.function_list)
+    def new_function(self):
+        self.functions_id += 1
+        temp = FunctionBar(self, self.functions_frame, self.root, self.functions_id)
+        Graph.add_line(self, temp, self.ax, self.functions_id)
+
 
     def create_widgets(self):
         window_frame = tk.Frame(self.root)
@@ -169,7 +216,7 @@ class GraphWindow:
         self.functions_frame = tk.Frame(window_frame)
         self.functions_frame.pack(side='bottom')
 
-        Graph(self.f, self.root)
+        # self.graph = Graph(self.f, self.root)
 
         add_button = ttk.Button(self.functions_frame, text='Add function', command=lambda: self.new_function())
         add_button.pack(side='right')
@@ -178,12 +225,27 @@ class GraphWindow:
         self.root = tk.Tk()
         self.root.title("Function Graphing")
         self.f = Figure(figsize=(5, 5), dpi=100)
-        print(self.f)
-        self.functions = 0
+        self.ax = self.f.add_subplot()
+        #self.ax.set_ylabel("Y axis")
+        #self.ax.set_xlabel("X axis")
+        self.ax.grid()
+        self.ax.set_ylim((-10, 10))
+        self.x_lim = 10
+        self.ax.set_xlim(- self.x_lim, self.x_lim)
+        self.ax.spines['left'].set_position('zero')
+        self.ax.spines['bottom'].set_position('zero')
+        self.ax.spines['top'].set_color('none')
+        self.ax.spines['right'].set_color('none')
+
+        self.functions_id = -1
         self.function_list = []
         self.create_widgets()
+        super().__init__(self.f, self.root)
         self.new_function()
+
         self.root.mainloop()
+
+
 
 
 if __name__ == "__main__":
